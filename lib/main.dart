@@ -22,6 +22,7 @@ class MainApp extends StatelessWidget {
         home: child,
         onGenerateRoute: RouteGenerator.getRoute,
         initialRoute: Routes.signInRoute,
+
       ),
     );
   }

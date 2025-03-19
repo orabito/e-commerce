@@ -36,6 +36,7 @@ class _MainLayoutState extends State<MainLayout> {
         child: SizedBox(
           height: MediaQuery.of(context).size.height * 0.1,
           child: BottomNavigationBar(
+
             currentIndex: currentIndex,
             onTap: (value) => changeSelectedIndex(value),
             backgroundColor: ColorManager.primary,

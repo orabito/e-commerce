@@ -39,6 +39,7 @@ class CartScreen extends StatelessWidget {
         ],
       ),
       body: Padding(
+
         padding: REdgeInsets.all(AppPadding.p14),
         child: Column(
           children: [
