@@ -1,0 +1,2 @@
+D:/route flutter/frust_rout/e_commerce/android/app/.cxx/Debug/3z151d68/x86/CMakeFiles/edit_cache.dir
+D:/route flutter/frust_rout/e_commerce/android/app/.cxx/Debug/3z151d68/x86/CMakeFiles/rebuild_cache.dir
