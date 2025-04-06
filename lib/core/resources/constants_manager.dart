@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AppConstants {
   static const String delete = "Delete";
   static const String searchHint = "what do you search for?";
   static const String addToCart = "Add to Cart";
-  static const String baseUrl= "https://ecommerce.routemisr.com";
+  static  String baseUrl= "${dotenv.env["baseUrl"]}";
   static List<Map<String, dynamic>> favoriteProducts = [
     {
       "title": "Nike Air Jordon",

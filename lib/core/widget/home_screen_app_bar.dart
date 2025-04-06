@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/local/prefs_helper.dart';
 import 'package:ecommerce_app/core/resources/assets_manager.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/font_manager.dart';
@@ -79,6 +80,13 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
               ],
             ),
           )),
+      actions: [
+        IconButton(onPressed: (){
+          PrefsHelper.deleteToken();
+          Navigator.of(context).pushReplacementNamed(Routes.signInRoute);
+        },
+            icon:Icon(Icons.logout))
+      ],
       // leading: const SizedBox.shrink(),
     );
   }

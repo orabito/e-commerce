@@ -1,12 +1,21 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 
 import '../resources/constants_manager.dart';
-
+@singleton
 class ApiManger {
+
 late Dio dio;
+
 ApiManger(){
   dio=Dio(BaseOptions(
-    baseUrl:  AppConstants.baseUrl
+    baseUrl:  AppConstants.baseUrl,
+    validateStatus: (status) {
+if((status!>=200&&status<300)||(status==409)||(status ==401)){
+  return true;
+}
+return false;
+    },
   ));}
 
 Future<Response> getRequest(
@@ -14,7 +23,7 @@ Future<Response> getRequest(
  required  Map<String, dynamic>? headers,}) {return dio.get(path, queryParameters: parameters, options: Options(headers: headers));}
 
   Future<Response> postRequestRow(
-      {required Map<String, dynamic>? headers,
+      { Map<String, dynamic>? headers,
       required String path,
       Map<String, dynamic>? body}) {return dio.post(path, data: body, options: Options(headers: headers));}
 
