@@ -28,7 +28,7 @@ class _MainLayoutState extends State<MainLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const HomeScreenAppBar(),
-      extendBody: false,
+        extendBody: false,
       body: tabs[currentIndex],
       bottomNavigationBar: ClipRRect(
         borderRadius:  BorderRadius.only(
@@ -45,6 +45,9 @@ class _MainLayoutState extends State<MainLayout> {
             unselectedItemColor: ColorManager.white,
             showSelectedLabels: false, // Hide selected item labels
             showUnselectedLabels: false, // Hide unselected item labels
+            selectedLabelStyle: TextStyle(
+              color: ColorManager.grey ,
+            ),
             items: [
               // Build BottomNavigationBarItem widgets for each tab
               CustomBottomNavBarItem(IconsAssets.icHome, "Home"),
@@ -71,7 +74,9 @@ class CustomBottomNavBarItem extends BottomNavigationBarItem {
   String title;
   CustomBottomNavBarItem(this.iconPath, this.title)
       : super(
+
           label: title,
+
           icon: ImageIcon(
             AssetImage(iconPath), // Inactive icon image
             color: ColorManager.white, // Inactive icon color
@@ -79,10 +84,26 @@ class CustomBottomNavBarItem extends BottomNavigationBarItem {
           activeIcon: CircleAvatar(
             backgroundColor: ColorManager.white, // Background of active icon
             child: ImageIcon(
+
               AssetImage(iconPath),
               color: ColorManager
                   .primary, // Active icon imagecolor: ColorManager.primary, // Active icon color
             ),
           ),
         );
+
 }
+
+// class GreenRoundedButton extends ElevatedButton {
+//   final bool isselcetd ;
+//   GreenRoundedButton({this.isselcetd=false ,required void Function()? onPressed, required Widget child })
+//       : super(
+//     onPressed: onPressed,
+//     style: ElevatedButton.styleFrom(
+//       backgroundColor:isselcetd? Colors.green:Colors.green,
+//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+//     ),
+//     child: child,
+//   );
+// }
+

@@ -32,7 +32,6 @@ class CustomCategoryWidget extends StatelessWidget {
         //     );
         //   },
         // ),
-
         ClipRRect(
           borderRadius: BorderRadius.circular(100.r),
           child: Container(
