@@ -36,6 +36,18 @@ import '../../features/auth/sign_up/domain/use_case/SignupUseCase.dart'
     as _i228;
 import '../../features/auth/sign_up/presentation/manager/sign_up_view_model_cubit.dart'
     as _i794;
+import '../../features/main_layout/categories/presentation/manager/categories_cubit.dart'
+    as _i384;
+import '../../features/main_layout/home/data/data_source/home_remote_data_source.dart'
+    as _i197;
+import '../../features/main_layout/home/data/data_source/HomeDataSourceImp/HomeRemoteDataSourceImp.dart'
+    as _i555;
+import '../../features/main_layout/home/data/repository/home_repository_imp.dart'
+    as _i1029;
+import '../../features/main_layout/home/domain/repository/home_repository.dart'
+    as _i556;
+import '../../features/main_layout/home/domain/use_case/get_categories_use_case.dart'
+    as _i230;
 import '../remote/Api_manger.dart' as _i282;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -50,12 +62,18 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.singleton<_i282.ApiManger>(() => _i282.ApiManger());
+    gh.factory<_i384.CategoriesCubit>(
+        () => _i384.CategoriesCubit(gh<_i230.GetCategoriesUseCase>()));
     gh.factory<_i413.SignInRemoteDataSource>(
         () => _i592.SignInRemoteDataSourceImp(gh<_i282.ApiManger>()));
+    gh.factory<_i197.HomeRemoteDataSource>(
+        () => _i555.HomeRemoteDataSourceImp(gh<_i282.ApiManger>()));
     gh.factory<_i277.SignUpDataSource>(
         () => _i504.SignUpAPIDataSourceImp(gh<_i282.ApiManger>()));
     gh.factory<_i428.SignInRepository>(
         () => _i601.SignInRepositoryImp(gh<_i413.SignInRemoteDataSource>()));
+    gh.factory<_i556.HomeRepository>(
+        () => _i1029.HomeRepositoryImp(gh<_i197.HomeRemoteDataSource>()));
     gh.factory<_i287.SignInUseCase>(
         () => _i287.SignInUseCase(gh<_i428.SignInRepository>()));
     gh.factory<_i988.SignUpRepository>(
@@ -64,8 +82,11 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i228.SignupUseCase(gh<_i988.SignUpRepository>()));
     gh.factory<_i586.SignInViewModelCubit>(
         () => _i586.SignInViewModelCubit(gh<_i287.SignInUseCase>()));
+    gh.factory<GetCategoriesUseCase>(
+        () => GetCategoriesUseCase(gh<_i556.HomeRepository>()));
     gh.factory<_i794.SignUpViewModelCubit>(
         () => _i794.SignUpViewModelCubit(gh<_i228.SignupUseCase>()));
+    gh.factory<HomeCubit>(() => HomeCubit(gh<GetCategoriesUseCase>()));
     return this;
   }
 }
