@@ -16,7 +16,7 @@ class SubCategoriesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       flex: 2,
-      child: CustomScrollView(
+      child: CustomScrollView(  
         slivers: <Widget>[
           // category title
           SliverToBoxAdapter(

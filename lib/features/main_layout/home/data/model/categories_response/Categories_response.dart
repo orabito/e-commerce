@@ -1,6 +1,5 @@
 import 'package:ecommerce_app/features/main_layout/home/domain/entity/categories_entity/Categories_entity.dart';
 
-import '../../../domain/entity/categories_entity/category_entity.dart';
 import 'Metadata.dart';
 import 'category_model.dart';
 

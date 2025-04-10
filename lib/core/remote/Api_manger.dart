@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 import '../resources/constants_manager.dart';
+
 @singleton
 class ApiManger {
 
@@ -18,9 +19,14 @@ return false;
     },
   ));}
 
-Future<Response> getRequest(
-    {required String path, required Map<String, dynamic>?parameters,
- required  Map<String, dynamic>? headers,}) {return dio.get(path, queryParameters: parameters, options: Options(headers: headers));}
+Future<Response> getRequest({
+    required String path,
+    Map<String, dynamic>? parameters,
+    Map<String, dynamic>? headers,
+  }) {
+    return dio.get(path,
+        queryParameters: parameters, options: Options(headers: headers));
+  }
 
   Future<Response> postRequestRow(
       { Map<String, dynamic>? headers,
