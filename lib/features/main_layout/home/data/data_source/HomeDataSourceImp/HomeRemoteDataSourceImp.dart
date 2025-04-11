@@ -11,7 +11,6 @@ class HomeRemoteDataSourceImp implements HomeRemoteDataSource  {
   ApiManger apiManger;
   @factoryMethod
   HomeRemoteDataSourceImp(this.apiManger);
-  @override
   Future<Either<CategoriesResponse, String>> getCategories() async {
     
     try {
@@ -25,5 +24,7 @@ class HomeRemoteDataSourceImp implements HomeRemoteDataSource  {
     }
 
     }
+
+
   }
 

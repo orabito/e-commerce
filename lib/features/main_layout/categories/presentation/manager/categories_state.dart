@@ -12,7 +12,21 @@ sealed class CategoriesState {}
 
 
 }
-final class CategoriesErrorState extends CategoriesState {
+ class CategoriesErrorState extends CategoriesState {
   String error;
   CategoriesErrorState(this.error);
+}
+ class CategoriesNewState extends CategoriesState {
+
+
+}
+class SubCategoriesSuccessState  extends CategoriesState {
+  SubCategoriesEntity subCategoriesEntity;
+  SubCategoriesSuccessState(this.subCategoriesEntity);
+}
+class SubCategoriesLoadingState extends CategoriesState {}
+class SubCategoriesErrorState extends CategoriesState {
+  String error;
+  SubCategoriesErrorState(this.error);
+
 }

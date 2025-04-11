@@ -1,17 +1,23 @@
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
+import 'package:ecommerce_app/features/main_layout/categories/presentation/manager/categories_cubit.dart';
 import 'package:ecommerce_app/features/main_layout/categories/presentation/widgets/category_item.dart';
+import 'package:ecommerce_app/features/main_layout/home/domain/entity/categories_entity/Categories_entity.dart';
+import 'package:ecommerce_app/features/main_layout/home/domain/entity/categories_entity/category_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoriesList extends StatefulWidget {
-  const CategoriesList({super.key});
+ const  CategoriesList({super.key,required this.categories});
+final List<CategoryEntity> categories;
+
 
   @override
   State<CategoriesList> createState() => _CategoriesListState();
 }
 
 class _CategoriesListState extends State<CategoriesList> {
+
   // Index of the currently selected category
   int selectedIndex = 0;
 
@@ -46,9 +52,9 @@ class _CategoriesListState extends State<CategoriesList> {
           bottomLeft: Radius.circular(AppSize.s12.r),
         ),
         child: ListView.builder(
-          itemCount: 20,
+          itemCount: widget.categories.length,
           itemBuilder: (context, index) => CategoryItem(index,
-              "Laptops & Electronics", selectedIndex == index, onItemClick),
+             widget.categories[index].name??"" , selectedIndex == index, onItemClick),
         ),
       ),
     ));
@@ -57,7 +63,10 @@ class _CategoriesListState extends State<CategoriesList> {
   // callback function to change the selected index
   onItemClick(int index) {
     setState(() {
+
       selectedIndex = index;
+      CategoriesCubit.get(context).changeSelectedCategory(widget.categories[index]);
+
     });
   }
 }
