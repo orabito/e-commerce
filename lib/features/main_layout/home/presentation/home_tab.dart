@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:ecommerce_app/core/di/di.dart';
 import 'package:ecommerce_app/features/main_layout/home/presentation/manager/home_cubit.dart';
+import 'package:ecommerce_app/features/main_layout/home/presentation/widgets/custom_brand_widget.dart';
 import 'package:ecommerce_app/features/main_layout/home/presentation/widgets/custom_category_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,7 +51,10 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt.get<HomeCubit>()..getCategories(),
+      create: (context) =>
+      getIt.get<HomeCubit>()
+        ..getCategories()
+        ..getBrands(),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -64,16 +68,15 @@ class _HomeTabState extends State<HomeTab> {
                 CustomSectionBar(sectionNname: 'Categories', function: () {}),
                 BlocBuilder<HomeCubit, HomeState>(
                   buildWhen: (previous, current) {
-                    if (current is HomeCategoriesSuccess ||
+                    if (current is HomeCategoriesSuccessState ||
                         current is HomeCategoriesLoadingState ||
                         current is HomeCategoriesErrorState) {
                       return true;
                     }
-                    return false ;
+                    return false;
                   },
                   builder: (context, state) {
-
-                    if(state is HomeCategoriesSuccess){
+                    if (state is HomeCategoriesSuccessState) {
                       var categoriesEntity = state.categoriesEntity;
                       return SizedBox(
                         height: 270.h,
@@ -81,11 +84,53 @@ class _HomeTabState extends State<HomeTab> {
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return CustomCategoryWidget(
-                              categoryEntity:  categoriesEntity.data![index],
+                              categoryEntity: categoriesEntity.data![index],
                             );
                           },
-                          itemCount:  categoriesEntity.data?.length??0,
+                          itemCount: categoriesEntity.data?.length ?? 0,
 
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                          ),
+                        ),
+                      );
+                    }
+                    if (state is HomeCategoriesErrorState) {
+                      return Center(child: Text(state.errorMassage),);
+                    }
+
+                      return Center(
+                        child: CircularProgressIndicator(
+
+                        ),);
+
+                  },
+                ),
+
+
+                SizedBox(height: 12.h),
+                CustomSectionBar(sectionNname: 'Brands', function: () {}),
+                BlocBuilder<HomeCubit, HomeState>(
+                  buildWhen: (previous, current) {
+                    if (current is HomeBrandsSuccessState ||
+                        current is HomeBrandsLoadingState ||
+                        current is HomeBrandsErrorState) {
+                      return true;
+                    }
+                    return false;
+                  } ,
+                  builder: (context, state) {
+                    if(state is HomeBrandsSuccessState){
+                      return SizedBox(
+                        height: 270.h,
+                        child: GridView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return CustomBrandWidget(
+                              brandEntity: state.brandsEntity.data![index],
+                            );
+                          },
+                          itemCount: state.brandsEntity.data!.length,
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                           ),
@@ -93,38 +138,17 @@ class _HomeTabState extends State<HomeTab> {
                       );
 
                     }
-                    if(state is HomeCategoriesErrorState){
-                      return Center(child:Text(state.errorMassage) ,);
-
+                    if (state is HomeBrandsErrorState) {
+                      return Center(child: Text(state.error),);
                     }
-                   else{
 
-                      return Center(
-                          child: CircularProgressIndicator(
+                    return Center(
+                      child: CircularProgressIndicator(
 
-                          ),
-
-                    );}
-
-
+                      ),);
 
                   },
                 ),
-                // SizedBox(height: 12.h),
-                // CustomSectionBar(sectionNname: 'Brands', function: () {}),
-                // SizedBox(
-                //   height: 270.h,
-                //   child: GridView.builder(
-                //     scrollDirection: Axis.horizontal,
-                //     itemBuilder: (context, index) {
-                //       return const CustomBrandWidget();
-                //     },
-                //     itemCount: 20,
-                //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                //       crossAxisCount: 2,
-                //     ),
-                //   ),
-                // ),
                 // CustomSectionBar(
                 //   sectionNname: 'Most Selling Products',
                 //   function: () {},
@@ -138,7 +162,7 @@ class _HomeTabState extends State<HomeTab> {
                 //         return const ProductCard(
                 //           title: "Nike Air Jordon",
                 //           description:
-                //               "Nike is a multinational corporation that designs, develops, and sells athletic footwear ,apparel, and accessories",
+                //           "Nike is a multinational corporation that designs, develops, and sells athletic footwear ,apparel, and accessories",
                 //           rating: 4.5,
                 //           price: 1100,
                 //           priceBeforeDiscound: 1500,

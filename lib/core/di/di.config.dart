@@ -56,6 +56,8 @@ import '../../features/main_layout/home/data/repository/home_repository_imp.dart
     as _i1029;
 import '../../features/main_layout/home/domain/repository/home_repository.dart'
     as _i556;
+import '../../features/main_layout/home/domain/use_case/get_brands_use_case.dart'
+    as _i665;
 import '../../features/main_layout/home/domain/use_case/get_categories_use_case.dart'
     as _i230;
 import '../../features/main_layout/home/presentation/manager/home_cubit.dart'
@@ -74,8 +76,6 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.singleton<_i282.ApiManger>(() => _i282.ApiManger());
-    gh.factory<_i404.HomeCubit>(
-        () => _i404.HomeCubit(gh<_i230.GetCategoriesUseCase>()));
     gh.factory<_i902.SubCategoriesRemoteDataSource>(
         () => _i527.SubCategoriesRemoteDataSourceImp(gh<_i282.ApiManger>()));
     gh.factory<_i413.SignInRemoteDataSource>(
@@ -103,6 +103,12 @@ extension GetItInjectableX on _i174.GetIt {
         _i90.GetSubCategoriesUseCase(gh<_i392.SubCategoriesRepository>()));
     gh.factory<_i230.GetCategoriesUseCase>(
         () => _i230.GetCategoriesUseCase(gh<_i556.HomeRepository>()));
+    gh.factory<_i665.GetBrandsUseCase>(
+        () => _i665.GetBrandsUseCase(gh<_i556.HomeRepository>()));
+    gh.factory<_i404.HomeCubit>(() => _i404.HomeCubit(
+          gh<_i230.GetCategoriesUseCase>(),
+          gh<_i665.GetBrandsUseCase>(),
+        ));
     gh.factory<_i794.SignUpViewModelCubit>(
         () => _i794.SignUpViewModelCubit(gh<_i228.SignupUseCase>()));
     gh.factory<_i384.CategoriesCubit>(() => _i384.CategoriesCubit(

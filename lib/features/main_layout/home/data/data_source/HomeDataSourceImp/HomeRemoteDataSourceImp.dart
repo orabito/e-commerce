@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/core/remote/Api_manger.dart';
+import 'package:ecommerce_app/features/main_layout/home/data/model/brands_response/Brands_response_model.dart';
 
 import 'package:ecommerce_app/features/main_layout/home/data/model/categories_response/Categories_response.dart';
 import 'package:injectable/injectable.dart';
@@ -25,6 +26,14 @@ class HomeRemoteDataSourceImp implements HomeRemoteDataSource  {
 
     }
 
-
+  @override
+  Future<Either<BrandsResponseModel, String>> getBrands() async {
+try {
+  var response =await apiManger.getRequest(path: EndPoints.allBrands);
+  return Left(BrandsResponseModel.fromJson(response.data));
+} on Exception catch (error) {
+  return Right(error.toString());
+}
+  }
   }
 
