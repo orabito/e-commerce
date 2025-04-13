@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/features/products_screen/domain/entity/Products_entity.dart';
+
 import '../../../main_layout/home/data/model/categories_response/Metadata.dart';
 import 'ProductModel.dart';
 
@@ -36,5 +38,10 @@ class ProductResponseModel {
     }
     return map;
   }
-
+ ProductsEntity toProductsEntity(){
+return ProductsEntity(
+  data: data?.map((e) => e.toProductEntity(),).toList(),
+  metadata: metadata?.toMetadataEntity()
+);
+}
 }

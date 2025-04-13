@@ -1,8 +1,12 @@
 
 import 'package:ecommerce_app/features/main_layout/categories/data/model/sub_categpries_response/SubCategoryModel.dart';
+
+import 'package:ecommerce_app/features/main_layout/home/data/model/brands_response/brand_model.dart';
 import 'package:ecommerce_app/features/main_layout/home/data/model/categories_response/category_model.dart';
 
-import 'Brand.dart';
+import '../../domain/entity/ProductEntity.dart';
+
+
 
 /// sold : 14438
 /// images : ["https://ecommerce.routemisr.com/Route-Academy-products/1680403397482-1.jpeg","https://ecommerce.routemisr.com/Route-Academy-products/1680403397482-2.jpeg","https://ecommerce.routemisr.com/Route-Academy-products/1680403397483-3.jpeg","https://ecommerce.routemisr.com/Route-Academy-products/1680403397485-4.jpeg"]
@@ -60,7 +64,7 @@ class ProductModel {
     price = json['price'];
     imageCover = json['imageCover'];
     category = json['category'] != null ? CategoryModel.fromJson(json['category']) : null;
-    brand = json['brand'] != null ? Brand.fromJson(json['brand']) : null;
+    brand = json['brand'] != null ? BrandModel.fromJson(json['brand']) : null;
     ratingsAverage = json['ratingsAverage'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
@@ -78,7 +82,7 @@ class ProductModel {
   num? price;
   String? imageCover;
   CategoryModel? category;
-  Brand? brand;
+  BrandModel? brand;
   num? ratingsAverage;
   String? createdAt;
   String? updatedAt;
@@ -110,6 +114,26 @@ class ProductModel {
     map['updatedAt'] = updatedAt;
 
     return map;
+  }
+  ProductEntity toProductEntity(){
+    return ProductEntity(id: id,
+      brand: brand?.toBrandEntity(),
+      category: category?.toCategoryEntity(),
+      description: description,
+      imageCover: imageCover,
+      images: images,
+      price: price,
+      quantity: quantity,
+      ratingsAverage: ratingsAverage,
+      ratingsQuantity: ratingsQuantity,
+      sold: sold,
+      subcategory: subcategory
+          ?.map(
+            (e) => e.toSubCategoryEntity(),
+          )
+          .toList(),
+      title: title,
+    );
   }
 
 }

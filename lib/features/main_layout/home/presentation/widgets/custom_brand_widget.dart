@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/core/resources/assets_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
+import '../../../../../core/resources/color_manager.dart';
+import '../../../../../core/resources/styles_manager.dart';
 import '../../domain/entity/brand_entity/Brand_entity.dart';
 
 class CustomBrandWidget extends StatelessWidget {
@@ -34,7 +37,11 @@ final BrandEntity brandEntity;
             );
           },
         ),
-
+        SizedBox(height: 8.h),
+        Text(
+          brandEntity.name!,
+          style: getRegularStyle(color: ColorManager.darkBlue, fontSize: 14.sp),
+        ),
       ],
 
     );

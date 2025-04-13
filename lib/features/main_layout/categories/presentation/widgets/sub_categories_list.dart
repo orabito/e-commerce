@@ -83,7 +83,9 @@ class SubCategoriesList extends StatelessWidget {
                 }
                 return SliverGrid(
 
+
                     delegate: SliverChildBuilderDelegate(
+
                       childCount:  state.subCategoriesEntity.data?.length??0,
                       (context, index) => SubCategoryItem(
                           state.subCategoriesEntity.data?[index].name ?? "",
@@ -94,9 +96,12 @@ class SubCategoriesList extends StatelessWidget {
                           goToCategoryProductsListScreen),
                     ),
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                         SliverGridDelegateWithFixedCrossAxisCount(
+
+
+
                       crossAxisCount: 2,
-                      childAspectRatio: 1,
+                           childAspectRatio: .9,
                       mainAxisSpacing: AppSize.s8,
                       crossAxisSpacing: AppSize.s8,
                     ));

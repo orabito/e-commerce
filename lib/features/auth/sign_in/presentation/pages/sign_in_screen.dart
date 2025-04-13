@@ -140,8 +140,10 @@ class _SignInScreenState extends State<SignInScreen> {
                               );
                             } else if (state is SignInSuccessState) {
                               PrefsHelper.saveToken(state.entity.token!);
-                              Navigator.of(context)
-                                  .pushReplacementNamed(Routes.mainRoute);
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                Routes.mainRoute,
+                                    (Route<dynamic> route) => false,
+                              );
                             }
                           },
                           builder: (context, state) {

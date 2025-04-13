@@ -3,6 +3,7 @@ import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/core/routes_manager/routes.dart';
+import 'package:ecommerce_app/features/main_layout/categories/presentation/manager/categories_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,16 +16,17 @@ class SubCategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, Routes.productsScreenRoute),
+      onTap: () => Navigator.pushNamed(context, Routes.productsScreenRoute,arguments:CategoriesCubit.get(context).selectedCategory ),
       overlayColor: WidgetStateProperty.all(Colors.transparent),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           AspectRatio(
             aspectRatio:1.4,
             child: Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppSize.s12.r),
+                  borderRadius: BorderRadius.circular(AppSize.s8.r),
                   border: Border.all(color: ColorManager.primary, width: 2.w)),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(AppSize.s10.r),
@@ -46,8 +48,10 @@ class SubCategoryItem extends StatelessWidget {
               ),
             ),
           ),
+
           Text(
             title,
+            maxLines: 2,
             style: getRegularStyle(color: ColorManager.primary),
           )
         ],
