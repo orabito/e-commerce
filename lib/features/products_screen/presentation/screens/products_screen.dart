@@ -1,29 +1,41 @@
+import 'package:ecommerce_app/core/di/di.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
+import 'package:ecommerce_app/features/main_layout/home/domain/entity/categories_entity/category_entity.dart';
 import 'package:ecommerce_app/features/products_screen/presentation/widgets/custom_product_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/resources/assets_manager.dart';
 import '../../../../core/widget/home_screen_app_bar.dart';
+import '../logic/product_cubit.dart';
 
 class ProductsScreen extends StatelessWidget {
-  const ProductsScreen({super.key});
-
+  const ProductsScreen({super.key,required this.categoryEntity});
+final CategoryEntity categoryEntity;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Scaffold(
+
+
+    return BlocProvider(
+  create: (context) => getIt<ProductCubit>()..getProductFromCategory(categoryEntity.id??""),
+  child: Scaffold(
       appBar: const HomeScreenAppBar(
         automaticallyImplyLeading: true,
       ),
-      body: Padding(
+      body: BlocBuilder<ProductCubit, ProductState>(
+
+  builder: (context, state) {
+    if (state is ProductSuccessState){
+      var products=state.entity.data;
+      return Padding(
         padding:  REdgeInsets.all(AppPadding.p16),
         child: Column(
           children: [
             Expanded(
               child: GridView.builder(
-                itemCount: 20,
+                itemCount: products?.length??0,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 8,
@@ -32,23 +44,26 @@ class ProductsScreen extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) {
                   return CustomProductWidget(
-                    image: ImageAssets.categoryHomeImage,
-                    title: "Nike Air Jordon",
-                    price: 1100,
-                    rating: 4.7,
-                    discountPercentage: 10,
+                  productEntity: products![index],
                     height: height,
                     width: width,
-                    description:
-                        "Nike is a multinational corporation that designs, develops, and sells athletic footwear ,apparel, and accessories",
-                  );
+               );
                 },
                 scrollDirection: Axis.vertical,
               ),
             )
           ],
         ),
-      ),
-    );
+      );
+    }
+    if( state is ProductErrorState){
+      return Center(child: Text(state.error),);
+    }
+    return const Center(child: CircularProgressIndicator(),);
+
+  },
+),
+    ),
+);
   }
 }

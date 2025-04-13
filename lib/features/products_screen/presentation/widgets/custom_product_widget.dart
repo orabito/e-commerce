@@ -1,30 +1,25 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/routes_manager/routes.dart';
 import 'package:ecommerce_app/core/widget/heart_button.dart';
+import 'package:ecommerce_app/features/products_screen/domain/entity/ProductEntity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 class CustomProductWidget extends StatelessWidget {
   final double width;
   final double height;
-  final String image;
-  final String title;
-  final String description;
-  final double price;
-  final double discountPercentage;
-  final double rating;
+
+  final ProductEntity productEntity;
 
   const CustomProductWidget({
     super.key,
+    required this.productEntity,
     required this.width,
     required this.height,
-    required this.image,
-    required this.title,
-    required this.description,
-    required this.price,
-    required this.discountPercentage,
-    required this.rating,
+
   });
 
   String truncateTitle(String title) {
@@ -69,28 +64,45 @@ class CustomProductWidget extends StatelessWidget {
                 children: [
                   // Not working with the lastest flutter version
 
-                  // CachedNetworkImage(
-                  //   imageUrl: image,
-                  //   height: height * 0.15,
-                  //   width: double.infinity,
-                  //   fit: BoxFit.cover,
-                  //   placeholder: (context, url) =>
-                  //       const Center(child: CircularProgressIndicator()),
-                  //   errorWidget: (context, url, error) => const Icon(Icons.error),
-                  // ),
+                  CachedNetworkImage(
+                    imageUrl: productEntity.imageCover ?? "",
+                    height: height * 0.15,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) =>
+                        const Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                    imageBuilder: (context, imageProvider) {
+                      return Container(
+                        height: height * 0.15,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(14.r)),
+                          image: DecorationImage(image: imageProvider,fit: BoxFit.cover
+
+                          )
+
+                        ),
+
+
+                      );
+                    },
+                  ),
                   // Image.network(
                   //   image,
                   //   fit: BoxFit.cover,
                   // ),
-                  ClipRRect(
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(14.r)),
-                    child: Image.asset(
-                      image,
-                      fit: BoxFit.cover,
-                      width: width,
-                    ),
-                  ),
+                  // ClipRRect(
+                  //   borderRadius:
+                  //       BorderRadius.vertical(top: Radius.circular(14.r)),
+                  //   child: Image.asset(
+                  //     image,
+                  //     fit: BoxFit.cover,
+                  //     width: width,
+                  //   ),
+                  // ),
                   Positioned(
                       top: height * 0.01,
                       right: width * 0.02,
@@ -99,14 +111,15 @@ class CustomProductWidget extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 5,
+              flex: 6,
               child: Padding(
                 padding: const EdgeInsets.all(4),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      truncateTitle(title),
+                      maxLines: 2,
+                      truncateTitle(productEntity.title??""),
                       style: getMediumStyle(
                         color: ColorManager.textColor,
                         fontSize: 14.sp,
@@ -114,46 +127,52 @@ class CustomProductWidget extends StatelessWidget {
                     ),
                     SizedBox(height: height * 0.002),
                     Text(
-                      truncateDescription(description),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      truncateDescription(productEntity.description??""),
                       style: getRegularStyle(
                         color: ColorManager.textColor,
                         fontSize: 14.sp,
                       ),
                     ),
-                    SizedBox(height: height * 0.01),
+                    SizedBox(height: height * 0.001),
                     SizedBox(
                       width: width * 0.3,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "EGP $price",
+                          Text(NumberFormat.simpleCurrency(name: "EGP", ).format(productEntity.price)
+                          ,
                             style: getRegularStyle(
                               color: ColorManager.textColor,
                               fontSize: 14.sp,
                             ),
                           ),
                           Text(
-                            "$discountPercentage %",
+                            "${productEntity.quantity} ",
                             style: getTextWithLine(),
                           ),
                         ],
                       ),
                     ),
-                    // SizedBox(height: height * 0.005),
+                    SizedBox(height: height * 0.005),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
                           // width: width * 0.22,
                           child: Row(
+                            mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                "Review ($rating)",
-                                style: getRegularStyle(
-                                  color: ColorManager.textColor,
-                                  fontSize: 12.sp,
+                              Flexible(
+                                child: Text(
+
+                                  "Review (${productEntity.ratingsAverage})",
+                                  style: getRegularStyle(
+                                    color: ColorManager.textColor,
+                                    fontSize: 12.sp,
+                                  ),
                                 ),
                               ),
                               const Icon(
@@ -164,20 +183,22 @@ class CustomProductWidget extends StatelessWidget {
                           ),
                         ),
                         const Spacer(),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Container(
-                              height: height * 0.036,
-                              width: width * 0.08,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: ColorManager.primary,
-                              ),
-                              child: const Icon(
-                                Icons.add,
-                                color: Colors.white,
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: InkWell(
+                              onTap: () {},
+                              child: Container(
+                                height: height * 0.036,
+                                width: width * 0.08,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: ColorManager.primary,
+                                ),
+                                child: const Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),

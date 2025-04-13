@@ -142,7 +142,10 @@ late TextEditingController phoneController;
                             else if(state is SignUpSuccessState){
 
                               PrefsHelper.saveToken(state.signUpEntity.token!);
-                              Navigator.pushReplacementNamed(context,Routes.mainRoute );
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                Routes.mainRoute,
+                                    (Route<dynamic> route) => false,
+                              );
                             }
                           },
                           builder: (context, state) {

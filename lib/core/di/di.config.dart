@@ -60,8 +60,19 @@ import '../../features/main_layout/home/domain/use_case/get_brands_use_case.dart
     as _i665;
 import '../../features/main_layout/home/domain/use_case/get_categories_use_case.dart'
     as _i230;
-import '../../features/main_layout/home/presentation/manager/home_cubit.dart'
-    as _i404;
+import '../../features/main_layout/home/presentation/manager/home_cubit.dart';
+import '../../features/products_screen/data/data_source/products_screen_remote_data_source.dart'
+    as _i508;
+import '../../features/products_screen/data/data_source/ProductsScreenRemoteDataSourceImp/ProductsScreenRemoteDataSourceImp.dart'
+    as _i705;
+import '../../features/products_screen/data/repository/products_screen_repository_imp.dart'
+    as _i115;
+import '../../features/products_screen/domain/repository/products_screen_repository.dart'
+    as _i1073;
+import '../../features/products_screen/domain/use_case/all_product_from_category_use_case.dart'
+    as _i208;
+import '../../features/products_screen/presentation/logic/product_cubit.dart'
+    as _i943;
 import '../remote/Api_manger.dart' as _i282;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -84,8 +95,16 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i555.HomeRemoteDataSourceImp(gh<_i282.ApiManger>()));
     gh.factory<_i277.SignUpDataSource>(
         () => _i504.SignUpAPIDataSourceImp(gh<_i282.ApiManger>()));
+    gh.factory<_i508.ProductsScreenRemoteDataSource>(
+        () => _i705.ProductsScreenRemoteDataSourceImp(gh<_i282.ApiManger>()));
+    gh.factory<HomeCubit>(() => HomeCubit(
+          gh<_i230.GetCategoriesUseCase>(),
+          gh<_i665.GetBrandsUseCase>(),
+        ));
     gh.factory<_i428.SignInRepository>(
         () => _i601.SignInRepositoryImp(gh<_i413.SignInRemoteDataSource>()));
+    gh.factory<_i943.ProductCubit>(
+        () => _i943.ProductCubit(gh<_i208.AllProductFromCategoryUseCase>()));
     gh.factory<_i392.SubCategoriesRepository>(() =>
         _i420.SubCategoriesRepositoryImp(
             gh<_i902.SubCategoriesRemoteDataSource>()));
@@ -95,20 +114,21 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i287.SignInUseCase(gh<_i428.SignInRepository>()));
     gh.factory<_i988.SignUpRepository>(
         () => _i948.SignUpRepositoryImp(gh<_i277.SignUpDataSource>()));
+    gh.factory<_i1073.ProductsScreenRepository>(() =>
+        _i115.ProductsScreenRepositoryImp(
+            gh<_i508.ProductsScreenRemoteDataSource>()));
     gh.factory<_i228.SignupUseCase>(
         () => _i228.SignupUseCase(gh<_i988.SignUpRepository>()));
     gh.factory<_i586.SignInViewModelCubit>(
         () => _i586.SignInViewModelCubit(gh<_i287.SignInUseCase>()));
     gh.factory<_i90.GetSubCategoriesUseCase>(() =>
         _i90.GetSubCategoriesUseCase(gh<_i392.SubCategoriesRepository>()));
+    gh.factory<_i208.AllProductFromCategoryUseCase>(() =>
+        _i208.AllProductFromCategoryUseCase(gh<_i1073.ProductsScreenRepository>()));
     gh.factory<_i230.GetCategoriesUseCase>(
         () => _i230.GetCategoriesUseCase(gh<_i556.HomeRepository>()));
     gh.factory<_i665.GetBrandsUseCase>(
         () => _i665.GetBrandsUseCase(gh<_i556.HomeRepository>()));
-    gh.factory<_i404.HomeCubit>(() => _i404.HomeCubit(
-          gh<_i230.GetCategoriesUseCase>(),
-          gh<_i665.GetBrandsUseCase>(),
-        ));
     gh.factory<_i794.SignUpViewModelCubit>(
         () => _i794.SignUpViewModelCubit(gh<_i228.SignupUseCase>()));
     gh.factory<_i384.CategoriesCubit>(() => _i384.CategoriesCubit(

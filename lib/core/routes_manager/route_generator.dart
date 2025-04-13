@@ -7,6 +7,7 @@ import 'package:ecommerce_app/features/products_screen/presentation/screens/prod
 import 'package:flutter/material.dart';
 
 import '../../features/auth/sign_in/presentation/pages/sign_in_screen.dart';
+import '../../features/main_layout/home/domain/entity/categories_entity/category_entity.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -17,8 +18,11 @@ class RouteGenerator {
       case Routes.mainRoute:
         return MaterialPageRoute(builder: (_) => const MainLayout());
 
-      case Routes.productsScreenRoute:
-        return MaterialPageRoute(builder: (_) => const ProductsScreen());
+      case Routes.productsScreenRoute:{
+        CategoryEntity? categoryEntity=     settings.arguments as CategoryEntity;
+        return MaterialPageRoute(builder: (_) =>  ProductsScreen(categoryEntity: categoryEntity,));
+
+      }
 
       case Routes.productDetails:
         return MaterialPageRoute(builder: (_) => const ProductDetails());
