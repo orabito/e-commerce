@@ -13,7 +13,7 @@ class CustomProductWidget extends StatelessWidget {
   final double height;
 
   final ProductEntity productEntity;
-
+//edit
   const CustomProductWidget({
     super.key,
     required this.productEntity,
