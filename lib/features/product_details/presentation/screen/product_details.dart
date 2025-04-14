@@ -12,8 +12,12 @@ import 'package:ecommerce_app/features/product_details/presentation/widgets/prod
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../products_screen/domain/entity/ProductEntity.dart';
+
 class ProductDetails extends StatelessWidget {
-  const ProductDetails({super.key});
+  final ProductEntity product;
+
+  const ProductDetails({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -45,36 +49,31 @@ class ProductDetails extends StatelessWidget {
           padding: REdgeInsets.only(left: 16, right: 16, bottom: 50),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const ProductSlider(items: [
-              ProductItem(
-                imageUrl:
-                    'https://assets.adidas.com/images/w_1880,f_auto,q_auto/6776024790f445b0873ee66fdcde54a1_9366/GX6544_HM3_hover.jpg',
-              ),
-              ProductItem(
-                imageUrl:
-                    'https://assets.adidas.com/images/w_1880,f_auto,q_auto/6776024790f445b0873ee66fdcde54a1_9366/GX6544_HM3_hover.jpg',
-              ),
-              ProductItem(
-                imageUrl:
-                    "https://assets.adidas.com/images/w_1880,f_auto,q_auto/6776024790f445b0873ee66fdcde54a1_9366/GX6544_HM3_hover.jpg",
-              )
-            ], initialIndex: 0),
+            ProductSlider(
+                items: product.images
+                    !.map(
+                      (image) => ProductItem(
+                        imageUrl:image
+                      ),
+                    )
+                    .toList(),
+                initialIndex: 0),
             SizedBox(
               height: 24.h,
             ),
-            const ProductLabel(
-                productName: 'Nike Air Jordon', productPrice: 'EGP 3,500'),
+            ProductLabel(
+                productName: product.title??"", productPrice: 'EGP ${product.price??""}'),
             SizedBox(
               height: 16.h,
             ),
-            const ProductRating(
-                productBuyers: '3,230', productRating: '4.8 (7,500)'),
+            ProductRating(
+                productBuyers: product.sold.toString(), productRating: '${product.ratingsAverage} (${product.ratingsQuantity})'),
             SizedBox(
               height: 16.h,
             ),
-            const ProductDescription(
+            ProductDescription(
                 productDescription:
-                    'Nike is a multinational corporation that designs, develops, and sells athletic footwear ,apparel, and accessories'),
+                    product.description??""),
             ProductSize(
               size: const [35, 38, 39, 40],
               onSelected: () {},

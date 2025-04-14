@@ -60,7 +60,8 @@ import '../../features/main_layout/home/domain/use_case/get_brands_use_case.dart
     as _i665;
 import '../../features/main_layout/home/domain/use_case/get_categories_use_case.dart'
     as _i230;
-import '../../features/main_layout/home/presentation/manager/home_cubit.dart';
+import '../../features/main_layout/home/presentation/manager/home_cubit.dart'
+    as _i404;
 import '../../features/products_screen/data/data_source/products_screen_remote_data_source.dart'
     as _i508;
 import '../../features/products_screen/data/data_source/ProductsScreenRemoteDataSourceImp/ProductsScreenRemoteDataSourceImp.dart'
@@ -97,14 +98,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i504.SignUpAPIDataSourceImp(gh<_i282.ApiManger>()));
     gh.factory<_i508.ProductsScreenRemoteDataSource>(
         () => _i705.ProductsScreenRemoteDataSourceImp(gh<_i282.ApiManger>()));
-    gh.factory<HomeCubit>(() => HomeCubit(
-          gh<_i230.GetCategoriesUseCase>(),
-          gh<_i665.GetBrandsUseCase>(),
-        ));
     gh.factory<_i428.SignInRepository>(
         () => _i601.SignInRepositoryImp(gh<_i413.SignInRemoteDataSource>()));
-    gh.factory<_i943.ProductCubit>(
-        () => _i943.ProductCubit(gh<_i208.AllProductFromCategoryUseCase>()));
     gh.factory<_i392.SubCategoriesRepository>(() =>
         _i420.SubCategoriesRepositoryImp(
             gh<_i902.SubCategoriesRemoteDataSource>()));
@@ -124,17 +119,25 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i90.GetSubCategoriesUseCase>(() =>
         _i90.GetSubCategoriesUseCase(gh<_i392.SubCategoriesRepository>()));
     gh.factory<_i208.AllProductFromCategoryUseCase>(() =>
-        _i208.AllProductFromCategoryUseCase(gh<_i1073.ProductsScreenRepository>()));
-    gh.factory<_i230.GetCategoriesUseCase>(
-        () => _i230.GetCategoriesUseCase(gh<_i556.HomeRepository>()));
+        _i208.AllProductFromCategoryUseCase(
+            gh<_i1073.ProductsScreenRepository>()));
     gh.factory<_i665.GetBrandsUseCase>(
         () => _i665.GetBrandsUseCase(gh<_i556.HomeRepository>()));
+    gh.factory<_i230.GetCategoriesUseCase>(
+        () => _i230.GetCategoriesUseCase(gh<_i556.HomeRepository>()));
     gh.factory<_i794.SignUpViewModelCubit>(
         () => _i794.SignUpViewModelCubit(gh<_i228.SignupUseCase>()));
     gh.factory<_i384.CategoriesCubit>(() => _i384.CategoriesCubit(
           gh<_i230.GetCategoriesUseCase>(),
           gh<_i90.GetSubCategoriesUseCase>(),
         ));
+    gh.factory<_i404.HomeCubit>(() => _i404.HomeCubit(
+          gh<_i230.GetCategoriesUseCase>(),
+          gh<_i665.GetBrandsUseCase>(),
+          gh<_i208.AllProductFromCategoryUseCase>(),
+        ));
+    gh.factory<_i943.ProductCubit>(
+        () => _i943.ProductCubit(gh<_i208.AllProductFromCategoryUseCase>()));
     return this;
   }
 }

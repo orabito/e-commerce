@@ -16,7 +16,7 @@ class ProductsScreenRepositoryImp implements ProductsScreenRepository {
 
   @override
   Future<Either<ProductsEntity, String>> getProductFromCategory(
-      String id) async {
+      String? id) async {
     // TODO: implement getProductFromCategory
   if (await InternetChecker.checkNetwork()){
     var response = await dataSource.getProductsFromCategories(id);

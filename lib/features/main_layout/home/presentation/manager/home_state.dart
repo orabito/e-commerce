@@ -19,6 +19,15 @@ final class HomeBrandsSuccessState extends HomeState {
   HomeBrandsSuccessState(this.brandsEntity);
 }
 final class HomeBrandsLoadingState extends HomeState {}
+final class HomeProductsLoadingState extends HomeState {}
+final class HomeProductsSuccessState extends HomeState {
+  ProductsEntity productsEntity;
+  HomeProductsSuccessState(this.productsEntity);
+}
+final class HomeProductsErrorState extends HomeState {
+  String error;
+  HomeProductsErrorState(this.error);
+}
 final class HomeBrandsErrorState extends HomeState {
   String error;
   HomeBrandsErrorState(this.error);

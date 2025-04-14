@@ -13,9 +13,9 @@ class ProductsScreenRemoteDataSourceImp implements ProductsScreenRemoteDataSourc
 
   ApiManger apiManger;
   @override
-  Future<Either<ProductResponseModel, String>> getProductsFromCategories(String id) async {
+  Future<Either<ProductResponseModel, String>> getProductsFromCategories(String? id) async {
  try {
-   var response =await apiManger .getRequest(path: EndPoints.allProducts,parameters: {"category[in]": id});
+   var response =await apiManger .getRequest(path: EndPoints.allProducts,parameters: id != null?{"category[in]": id}:null);
    return Left(ProductResponseModel.fromJson(response.data));
  } on Exception catch (error) {
    return Right(error.toString());

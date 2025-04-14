@@ -10,4 +10,6 @@ class AllProductFromCategoryUseCase {
   @factoryMethod
   AllProductFromCategoryUseCase(this.repo);
   Future<Either<ProductsEntity, String>> call(String id)=>repo.getProductFromCategory(id);
+  //to git all product in home tab
+  Future<Either<ProductsEntity, String>> callALLProduct()=>repo.getProductFromCategory(null);
 }

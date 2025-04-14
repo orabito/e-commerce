@@ -3,6 +3,7 @@ import 'package:ecommerce_app/features/auth/sign_up/presentation/pages/sign_up_s
 import 'package:ecommerce_app/features/cart/screens/cart_screen.dart';
 import 'package:ecommerce_app/features/main_layout/main_layout.dart';
 import 'package:ecommerce_app/features/product_details/presentation/screen/product_details.dart';
+import 'package:ecommerce_app/features/products_screen/domain/entity/ProductEntity.dart';
 import 'package:ecommerce_app/features/products_screen/presentation/screens/products_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,10 @@ class RouteGenerator {
       }
 
       case Routes.productDetails:
-        return MaterialPageRoute(builder: (_) => const ProductDetails());
+        {
+    ProductEntity? product=     settings.arguments as ProductEntity;
+    return MaterialPageRoute(builder: (_) =>   ProductDetails(product: product ));
+    }
 
       case Routes.signInRoute:
         return MaterialPageRoute(builder: (_) => const SignInScreen());

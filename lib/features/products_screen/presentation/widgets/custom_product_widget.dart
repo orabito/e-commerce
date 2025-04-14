@@ -43,7 +43,7 @@ class CustomProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, Routes.productDetails),
+      onTap: () => Navigator.pushNamed(context, Routes.productDetails,arguments:productEntity ),
       child: Container(
         width: width * 0.4,
         height: height * 0.3,

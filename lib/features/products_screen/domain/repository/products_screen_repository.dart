@@ -3,5 +3,5 @@ import 'package:ecommerce_app/features/products_screen/domain/entity/Products_en
 
 abstract class ProductsScreenRepository {
 
-  Future<Either<ProductsEntity,String>>  getProductFromCategory(String id);
+  Future<Either<ProductsEntity,String>>  getProductFromCategory(String? id);
 }

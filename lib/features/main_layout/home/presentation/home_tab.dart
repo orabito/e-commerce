@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/resources/assets_manager.dart';
+import '../../../../core/widget/product_card.dart';
 import 'widgets/custom_ads_widget.dart';
 import 'widgets/custom_section_bar.dart';
 
@@ -54,7 +55,7 @@ class _HomeTabState extends State<HomeTab> {
       create: (context) =>
       getIt.get<HomeCubit>()
         ..getCategories()
-        ..getBrands(),
+        ..getBrands()..getProducts(),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -149,30 +150,52 @@ class _HomeTabState extends State<HomeTab> {
 
                   },
                 ),
-                // CustomSectionBar(
-                //   sectionNname: 'Most Selling Products',
-                //   function: () {},
-                // ),
-                // SizedBox(
-                //   child: SizedBox(
-                //     height: 360.h,
-                //     child: ListView.builder(
-                //       scrollDirection: Axis.horizontal,
-                //       itemBuilder: (context, index) {
-                //         return const ProductCard(
-                //           title: "Nike Air Jordon",
-                //           description:
-                //           "Nike is a multinational corporation that designs, develops, and sells athletic footwear ,apparel, and accessories",
-                //           rating: 4.5,
-                //           price: 1100,
-                //           priceBeforeDiscound: 1500,
-                //           image: ImageAssets.categoryHomeImage,
-                //         );
-                //       },
-                //       itemCount: 20,
-                //     ),
-                //   ),
-                // ),
+                CustomSectionBar(
+                  sectionNname: 'Most Selling Products',
+                  function: () {},
+                ),
+                BlocBuilder<HomeCubit, HomeState>(
+                  buildWhen: (previous, current) {
+                    if (current is HomeProductsSuccessState ||
+                        current is HomeProductsLoadingState ||
+                        current is HomeProductsErrorState) {
+                      return true;
+                    }
+                    return false;
+                  } ,
+                  builder: (context, state) {
+                    if(state is HomeProductsSuccessState){
+                    var  products=state.productsEntity.data??[];
+                      return SizedBox(
+                        child: SizedBox(
+                          height: 360.h,
+                          child: ListView.builder(
+
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+
+                              return  ProductCard(
+                            product: products[index],
+                              );
+                            },
+                            itemCount: products.length,
+                          ),
+                        ),
+                      );
+
+                    }
+                    if (state is HomeProductsErrorState) {
+                      return Center(child: Text(state.error),);
+                    }
+
+                    return Center(
+                      child: CircularProgressIndicator(
+
+                      ),);
+
+                  },
+                ),
+
                 SizedBox(height: 12.h),
               ],
             )
