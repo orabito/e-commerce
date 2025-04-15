@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/features/auth/sign_up/data/model/signUp_response/user.dart';
 import 'package:ecommerce_app/features/auth/sign_up/domain/entity/signUpEntity/signUpEntity.dart';
 
+
 class SignUpResponse {
     String? message;
     String? statusMsg;
@@ -30,7 +31,7 @@ class SignUpResponse {
     SignUpEntity  toSignUpEntity(){
         return SignUpEntity(
             token: token,
-            user: user
+            user: user?.toUserEntity() ,
         );
     }
 }

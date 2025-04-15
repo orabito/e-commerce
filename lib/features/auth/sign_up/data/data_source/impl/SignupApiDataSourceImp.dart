@@ -7,8 +7,9 @@ import 'package:injectable/injectable.dart';
 @Injectable(as:SignUpDataSource )
 class SignUpAPIDataSourceImp extends SignUpDataSource {
   ApiManger apiManger;
+
   @factoryMethod
-  SignUpAPIDataSourceImp(this.apiManger);
+  SignUpAPIDataSourceImp(this.apiManger,);
   @override
   Future<Either<SignUpResponse, String>> registerUser(
       {required String name,
@@ -27,8 +28,10 @@ class SignUpAPIDataSourceImp extends SignUpDataSource {
       });
    SignUpResponse signUpResponse=SignUpResponse.fromJson(response.data);
    if(signUpResponse.statusMsg!=null){
+
      return Right(signUpResponse.message!);
    }else{
+
      return Left(signUpResponse);
    }
  } on Exception catch (e) {

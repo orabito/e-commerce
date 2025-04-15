@@ -83,6 +83,8 @@ class HomeScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         IconButton(onPressed: (){
           PrefsHelper.deleteToken();
+          PrefsHelper.user();
+
           Navigator.of(context).pushReplacementNamed(Routes.signInRoute);
         },
             icon:Icon(Icons.logout))

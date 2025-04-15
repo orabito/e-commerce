@@ -10,9 +10,9 @@ import '../../domain/repository/sign_up_repository.dart';
 @Injectable(as: SignUpRepository)
 class SignUpRepositoryImp implements SignUpRepository {
   SignUpDataSource signUpDataSource;
-
+  // final  PrefsHelper _prefsHelper;this._prefsHelper
   @factoryMethod
-  SignUpRepositoryImp(this.signUpDataSource);
+  SignUpRepositoryImp(this.signUpDataSource,);
 
   @override
   Future<Either<SignUpEntity, String>> registerUser(
@@ -30,7 +30,8 @@ class SignUpRepositoryImp implements SignUpRepository {
           rePassword: rePassword,
           phone: phone);
       return result.fold(
-        (response) {
+        (response) async {
+         // await PrefsHelper.saveUser(response.toSignUpEntity() as UserEntity);
           return Left(response.toSignUpEntity());
         },
         (error) {

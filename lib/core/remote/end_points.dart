@@ -6,7 +6,7 @@ class EndPoints {
   static final String categories = "${dotenv.env["categories"]}";
   static final String allProducts = "${dotenv.env["allProducts"]}";
   static final String allBrands = "${dotenv.env["allBrands"]}";
-
+static final String wishlist ="${dotenv.env["wishlist"]}";
   static String subcategoriesEndpoint(String id) =>
       "${dotenv.env["subcategories"]}$id${dotenv.env["categoryEndpoint"]}";
 

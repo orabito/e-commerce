@@ -5,7 +5,8 @@ import 'package:ecommerce_app/features/main_layout/home/domain/entity/categories
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CustomCategoryWidget extends StatelessWidget {
+
+class  CustomCategoryWidget extends StatelessWidget {
    CustomCategoryWidget({super.key, required this.categoryEntity});
 
    CategoryEntity categoryEntity;

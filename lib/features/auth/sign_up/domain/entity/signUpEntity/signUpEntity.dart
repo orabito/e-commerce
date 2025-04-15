@@ -1,8 +1,10 @@
-import 'package:ecommerce_app/features/auth/sign_up/data/model/signUp_response/user.dart';
+
+import '../user_entity.dart';
 
 class SignUpEntity {
-  User? user;
+  UserEntity? user;
   String? token;
+
 
   SignUpEntity({this.user, this.token});
 

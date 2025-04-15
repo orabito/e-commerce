@@ -140,7 +140,7 @@ late TextEditingController phoneController;
                                  ),);
                             }
                             else if(state is SignUpSuccessState){
-
+                               PrefsHelper.saveUser(state.signUpEntity.user);
                               PrefsHelper.saveToken(state.signUpEntity.token!);
                               Navigator.of(context).pushNamedAndRemoveUntil(
                                 Routes.mainRoute,

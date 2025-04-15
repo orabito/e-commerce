@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/core/local/prefs_helper.dart';
 import 'package:ecommerce_app/core/resources/assets_manager.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/font_manager.dart';
@@ -23,9 +24,10 @@ class ProfileTabState extends State<ProfileTab> {
   bool isPasswordReadOnly = true;
   bool isMobileNumberReadOnly = true;
   bool isAddressReadOnly = true;
-
+  var user= PrefsHelper.getUserEmail();
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding:  REdgeInsets.all(AppPadding.p20),
       child: SafeArea(
@@ -43,12 +45,12 @@ class ProfileTabState extends State<ProfileTab> {
               ),
               SizedBox(height: AppSize.s20.h),
               Text(
-                'Welcome, Mohamed',
+              'Welcome, ${  user?.email??""}',
                 style: getSemiBoldStyle(
                     color: ColorManager.primary, fontSize: FontSize.s18.sp),
               ),
               Text(
-                'mohamed.N@gmail.com',
+                user?.name??"",
                 style: getRegularStyle(
                     color: ColorManager.primary.withOpacity(.5),
                     fontSize: FontSize.s14.sp),
@@ -61,7 +63,7 @@ class ProfileTabState extends State<ProfileTab> {
                 hint: 'Enter your full name',
                 label: 'Full Name',
                 controller:
-                    TextEditingController(text: 'Mohamed Mohamed Nabil'),
+                    TextEditingController(text: user?.name??'Mohamed Mohamed Nabil'),
                 labelTextStyle: getMediumStyle(
                     color: ColorManager.primary, fontSize: FontSize.s18),
                 suffixIcon: IconButton(
@@ -84,7 +86,7 @@ class ProfileTabState extends State<ProfileTab> {
                 backgroundColor: ColorManager.white,
                 hint: 'Enter your email address',
                 label: 'E-mail address',
-                controller: TextEditingController(text: 'mohamed.N@gmail.com'),
+                controller: TextEditingController(text:user?.email?? 'mohamed.N@gmail.com'),
                 labelTextStyle: getMediumStyle(
                     color: ColorManager.primary, fontSize: FontSize.s18),
                 suffixIcon: IconButton(

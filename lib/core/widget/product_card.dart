@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecommerce_app/core/resources/assets_manager.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/features/products_screen/domain/entity/ProductEntity.dart';
@@ -25,8 +24,8 @@ final ProductEntity product;
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    // double height = MediaQuery.of(context).size.height;
+    // double width = MediaQuery.of(context).size.width;
     return SizedBox(
       width: 200.w,
       height: 280.h,
@@ -38,7 +37,7 @@ final ProductEntity product;
           color: Colors.white,
           border: Border.all(
             width: 1,
-            color: ColorManager.primary.withOpacity(0.8),
+            color: ColorManager.primary..withValues(alpha: 0.8),
           ),
         ),
         child: Column(
