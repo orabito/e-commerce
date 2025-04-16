@@ -10,25 +10,26 @@ class PrefsHelper {
     prefs= await SharedPreferences.getInstance();
   }
 static Future<bool> saveToken(String token)async{
-    return prefs.setString("token", token);
+return  prefs.setString("token", token);
 }
- static Future<String?>  getToken()  async {
-    return prefs.getString("token");
+ static String?  getToken()  {
+    return  prefs.getString("token");
+
 }
 static Future<bool> deleteToken() {
    return prefs.remove("token");
 }
-static Future<bool> user() {
-   return prefs.remove("email");
+static Future<bool> deleteUser() {
+   return prefs.remove("user");
 }
 
 
  static Future<bool>? saveUser(UserEntity? user) {
    if (user == null) return null;
-    return prefs.setString("email", jsonEncode(user.toJson()));
+    return prefs.setString("user", jsonEncode(user.toJson()));
   }
-static UserEntity? getUserEmail()  {
-  final json = prefs.getString("email");
+static UserEntity? getUser()  {
+  final json = prefs.getString("user");
   if (json == null) {
     return null;
   }

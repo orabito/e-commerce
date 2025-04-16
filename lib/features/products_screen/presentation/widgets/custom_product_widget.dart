@@ -110,9 +110,10 @@ class CustomProductWidget extends StatelessWidget {
                       top: height * 0.01,
                       right: width * 0.02,
                       child: HeartButton(onTap: () {
+
                         ProductCubit.get(context).addToWishlist(productEntity.id!);
 
-                      })),
+                      }, productId:productEntity.id! ,)),
                 ],
               ),
             ),

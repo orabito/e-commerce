@@ -24,7 +24,7 @@ class ProfileTabState extends State<ProfileTab> {
   bool isPasswordReadOnly = true;
   bool isMobileNumberReadOnly = true;
   bool isAddressReadOnly = true;
-  var user= PrefsHelper.getUserEmail();
+  var user= PrefsHelper.getUser();
   @override
   Widget build(BuildContext context) {
 

@@ -53,7 +53,8 @@ class ProductDetails extends StatelessWidget {
                 items: product.images
                     !.map(
                       (image) => ProductItem(
-                        imageUrl:image
+                        productEntity: product,
+
                       ),
                     )
                     .toList(),

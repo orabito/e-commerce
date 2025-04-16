@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/core/internet_checker.dart';
 import 'package:ecommerce_app/features/products_screen/data/data_source/products_screen_remote_data_source.dart';
-import 'package:ecommerce_app/features/products_screen/data/model/add__wishlist_model/Add__wishlist_model.dart';
 
 import 'package:ecommerce_app/features/products_screen/domain/entity/Products_entity.dart';
 import 'package:ecommerce_app/features/products_screen/domain/entity/add_wishlist_entity/Add_wishlist_entity.dart';

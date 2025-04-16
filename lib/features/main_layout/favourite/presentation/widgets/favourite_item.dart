@@ -61,7 +61,10 @@ class FavoriteItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                HeartButton(onTap: () {
+                HeartButton(
+                  productId: "",
+                    onTap: () {
+
                   //TODO:remove product from wish list
                 }),
                 SizedBox(height: AppSize.s14.h),

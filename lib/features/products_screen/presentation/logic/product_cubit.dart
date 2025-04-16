@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:ecommerce_app/features/products_screen/domain/entity/Products_entity.dart';
+import 'package:ecommerce_app/features/products_screen/domain/entity/add_wishlist_entity/Add_wishlist_entity.dart';
 import 'package:ecommerce_app/features/products_screen/domain/use_case/all_product_from_category_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -28,9 +29,21 @@ class ProductCubit extends Cubit<ProductState> {
    },);
 
   }
-   addToWishlist(String id) async {
-     var result=await addWishlistUseCase.call( id );
-     print(result.length());
+
+  addToWishlist(String id) async {
+    emit(AddToWishlistLoadingState(id));
+
+    var result = await addWishlistUseCase.call(id);
+    result.fold(
+      (addWishlistEntity) {
+        emit(AddToWishlistSuccessState(addWishlistEntity,id));
+      },
+      (error) {
+        emit(AddToWishlistErrorState(error,id));
+      },
+    );
+
+    // print(result.fold((l) =>print(l.message ), (r) => print(r),));
 
    }
   static ProductCubit get( context) =>BlocProvider.of(context) ;

@@ -122,7 +122,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         // width: MediaQuery.of(context).size.width * .8,
                         child: BlocConsumer<SignInViewModelCubit,
                             SignInViewModelState>(
-                          listener: (context, state) {
+                          listener: (context, state)  {
                             if (state is SignInErrorState) {
                               showDialog(
                                 context: context,
@@ -140,7 +140,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               );
                             } else if (state is SignInSuccessState) {
                               PrefsHelper.saveToken(state.entity.token!);
-                              PrefsHelper.saveUser(state.entity.user!);
+                               PrefsHelper.saveUser(state.entity.user!);
                               Navigator.of(context).pushNamedAndRemoveUntil(
                                 Routes.mainRoute,
                                     (Route<dynamic> route) => false,

@@ -1,16 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/core/widget/heart_button.dart';
+import 'package:ecommerce_app/features/products_screen/domain/entity/ProductEntity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({super.key, required this.imageUrl, this.onTap});
-  final String imageUrl;
+  const ProductItem({super.key,required this.productEntity,  this.onTap});
+  // final String imageUrl;required this.imageUrl
+final  ProductEntity productEntity;
   final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: imageUrl,
+      imageUrl: productEntity.imageCover??"",
       imageBuilder: (context, image) => Container(
         width: double.infinity,
         padding:  REdgeInsets.all(16),
@@ -21,6 +23,8 @@ class ProductItem extends StatelessWidget {
         ),
         alignment: Alignment.topRight,
         child: HeartButton(
+
+          productId:productEntity.id!,
           onTap: onTap,
         ),
       ),
