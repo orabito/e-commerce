@@ -27,7 +27,7 @@ class SignInRepositoryImp implements SignInRepository {
         return Right(error);
       },
     );
-    //hima246868@gmail.com
+
   }
   else{
    return Right("No Internet connection");
