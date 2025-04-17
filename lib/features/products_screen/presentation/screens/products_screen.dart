@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/core/di/di.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/features/main_layout/home/domain/entity/categories_entity/category_entity.dart';
 import 'package:ecommerce_app/features/products_screen/presentation/widgets/custom_product_widget.dart';
