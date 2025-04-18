@@ -11,6 +11,7 @@ import 'features/products_screen/presentation/logic/product_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //
   await dotenv.load(fileName: ".env");
   configureDependencies();
   Bloc.observer = MyBlocObserver();
