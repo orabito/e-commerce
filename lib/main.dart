@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/MyBlocObserver.dart';
 import 'core/di/di.dart';
 import 'core/routes_manager/route_generator.dart';
+import 'features/main_layout/favourite/presentation/logic/favourite_cubit.dart';
 import 'features/products_screen/presentation/logic/product_cubit.dart';
 
 Future<void> main() async {
@@ -18,10 +19,17 @@ Future<void> main() async {
 
   await PrefsHelper.initPrefs();
 
-  runApp(BlocProvider(
-    create: (context) => getIt<ProductCubit>(),
-    child:const MainApp(),
-  ));
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<ProductCubit>(create: (context) => getIt<ProductCubit>()),
+        BlocProvider<FavouriteCubit>(
+          create: (context) => getIt<FavouriteCubit>(),
+        )
+      ],
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -33,16 +41,14 @@ class MainApp extends StatelessWidget {
       designSize: const Size(430, 932),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child) =>
-          MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: child,
-            onGenerateRoute: RouteGenerator.getRoute,
-            initialRoute: PrefsHelper.getToken() == null
-                ? Routes.signInRoute
-                : Routes.mainRoute,
-
-          ),
+      builder: (context, child) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: child,
+        onGenerateRoute: RouteGenerator.getRoute,
+        initialRoute: PrefsHelper.getToken() == null
+            ? Routes.signInRoute
+            : Routes.mainRoute,
+      ),
     );
   }
 }
