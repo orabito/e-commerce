@@ -7,9 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class  CustomCategoryWidget extends StatelessWidget {
-   CustomCategoryWidget({super.key, required this.categoryEntity});
+const   CustomCategoryWidget({super.key, required this.categoryEntity});
 
-   CategoryEntity categoryEntity;
+final   CategoryEntity categoryEntity;
 
   @override
   Widget build(BuildContext context) {

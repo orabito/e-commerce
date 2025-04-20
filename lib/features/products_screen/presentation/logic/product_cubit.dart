@@ -8,26 +8,28 @@ import 'package:injectable/injectable.dart';
 import '../../domain/use_case/add_to_wishlist_use_case.dart';
 
 part 'product_state.dart';
+
 @injectable
 class ProductCubit extends Cubit<ProductState> {
   AllProductFromCategoryUseCase useCase;
-  AddToWishlistUseCase  addWishlistUseCase;
+  AddToWishlistUseCase addWishlistUseCase;
+
   // ProductsEntity?addproduct;
   @factoryMethod
-  ProductCubit(this.useCase,this.addWishlistUseCase) : super(ProductInitial());
+  ProductCubit(this.useCase, this.addWishlistUseCase) : super(ProductInitial());
+
   getProductFromCategory(id) async {
     emit(ProductLoadingState());
-   var result=await   useCase.call(id);
-   result.fold(
-   (productEntity) {
-     // addproduct=productEntity;
-     emit(ProductSuccessState(productEntity));
-
-   }
-   , (error) {
-     ProductErrorState(error);
-   },);
-
+    var result = await useCase.call(id);
+    result.fold(
+      (productEntity) {
+        // addproduct=productEntity;
+        emit(ProductSuccessState(productEntity));
+      },
+      (error) {
+        ProductErrorState(error);
+      },
+    );
   }
 
   addToWishlist(String id) async {
@@ -36,16 +38,15 @@ class ProductCubit extends Cubit<ProductState> {
     var result = await addWishlistUseCase.call(id);
     result.fold(
       (addWishlistEntity) {
-        emit(AddToWishlistSuccessState(addWishlistEntity,id));
+        emit(AddToWishlistSuccessState(addWishlistEntity, id));
       },
       (error) {
-        emit(AddToWishlistErrorState(error,id));
+        emit(AddToWishlistErrorState(error, id));
       },
     );
 
     // print(result.fold((l) =>print(l.message ), (r) => print(r),));
+  }
 
-   }
-  static ProductCubit get( context) =>BlocProvider.of(context) ;
-
+  static ProductCubit get(context) => BlocProvider.of(context);
 }

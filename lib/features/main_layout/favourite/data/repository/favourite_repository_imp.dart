@@ -5,6 +5,7 @@ import 'package:ecommerce_app/features/main_layout/favourite/data/data_source/fa
 import 'package:ecommerce_app/features/products_screen/data/model/ProductModel.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../products_screen/domain/entity/ProductEntity.dart';
 import '../../domain/repository/favourite_repository.dart';
 
 @Injectable(as: FavouriteRepository)
@@ -15,12 +16,12 @@ class FavouriteRepositoryImp implements FavouriteRepository {
   FavouriteRemoteDataSource dataSource;
 
   @override
-  Future<Either<List<ProductModel>, String>> getFavourite() async {
+  Future<Either<List<ProductEntity>, String>> getFavourite() async {
     if (await InternetChecker.checkNetwork()) {
       var result = await dataSource.getFavourite();
       return result.fold(
         (response) {
-          return Left(response.productModel??[]);
+          return Left(response.productModel!.map((e) => e.toProductEntity(),).toList());
         },
         (error) {
           return Right(error);

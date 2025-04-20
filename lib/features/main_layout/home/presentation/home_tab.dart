@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:ecommerce_app/core/di/di.dart';
+import 'package:ecommerce_app/core/local/prefs_helper.dart';
 import 'package:ecommerce_app/features/main_layout/home/presentation/manager/home_cubit.dart';
 import 'package:ecommerce_app/features/main_layout/home/presentation/widgets/custom_brand_widget.dart';
 import 'package:ecommerce_app/features/main_layout/home/presentation/widgets/custom_category_widget.dart';
@@ -32,6 +33,7 @@ class _HomeTabState extends State<HomeTab> {
   @override
   void initState() {
     super.initState();
+    print("token: ${PrefsHelper.getToken()}");
     _startImageSwitching();
   }
 

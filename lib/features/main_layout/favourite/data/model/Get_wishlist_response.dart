@@ -1,5 +1,6 @@
 
 import 'package:ecommerce_app/features/products_screen/data/model/ProductModel.dart';
+import 'package:ecommerce_app/features/products_screen/domain/entity/ProductEntity.dart';
 
 /// status : "success"
 /// count : 1
