@@ -14,16 +14,14 @@ class User {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['role'] = this.role;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['email'] = email;
+    data['role'] = role;
     return data;
   }
-  UserEntity toUserEntity(){
-    return UserEntity(
-      name: name,
-      email: email,
-      role: role);}
 
+  UserEntity toUserEntity() {
+    return UserEntity(name: name, email: email, role: role);
+  }
 }

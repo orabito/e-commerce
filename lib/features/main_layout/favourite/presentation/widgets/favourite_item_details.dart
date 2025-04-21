@@ -1,9 +1,7 @@
-import 'package:colornames/colornames.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/features/main_layout/favourite/presentation/widgets/custom_txt_widget.dart';
-import 'package:ecommerce_app/features/products_screen/data/model/ProductModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -14,7 +12,7 @@ import '../../../../products_screen/domain/entity/ProductEntity.dart';
 class FavouriteItemDetails extends StatelessWidget {
   const FavouriteItemDetails({required this.product, super.key});
 
- final ProductEntity product;
+  final ProductEntity product;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +21,7 @@ class FavouriteItemDetails extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         CustomTextWgt(
-          data: product.title??"",
+          data: product.title ?? "",
           textStyle: getSemiBoldStyle(
               color: ColorManager.primaryDark, fontSize: AppSize.s18.sp),
         ),

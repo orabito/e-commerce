@@ -6,7 +6,6 @@ import 'package:ecommerce_app/core/routes_manager/routes.dart';
 import 'package:ecommerce_app/core/widget/heart_button.dart';
 import 'package:ecommerce_app/features/main_layout/favourite/presentation/widgets/add_to_cart_button.dart';
 import 'package:ecommerce_app/features/main_layout/favourite/presentation/widgets/favourite_item_details.dart';
-import 'package:ecommerce_app/features/products_screen/data/model/ProductModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,7 +13,7 @@ import '../../../../products_screen/domain/entity/ProductEntity.dart';
 
 class FavoriteItem extends StatelessWidget {
   const FavoriteItem({super.key, required this.product});
-final   ProductEntity product;
+  final ProductEntity product;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -65,11 +64,10 @@ final   ProductEntity product;
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 HeartButton(
-                  productId: product.id??"",
+                    productId: product.id ?? "",
                     onTap: () {
-
-                  //TODO:remove product from wish list
-                }),
+                      //TODO:remove product from wish list
+                    }),
                 SizedBox(height: AppSize.s14.h),
                 AddToCartButton(
                   onPressed: () {

@@ -1,5 +1,4 @@
 class UserEntity {
-
   String? name;
   String? email;
   String? role;
@@ -9,13 +8,12 @@ class UserEntity {
     role = json['role'];
   }
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['role'] = this.role;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['email'] = email;
+    data['role'] = role;
     return data;
   }
+
   UserEntity({this.name, this.email, this.role});
-
-
 }

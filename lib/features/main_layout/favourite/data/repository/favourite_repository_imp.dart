@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/core/internet_checker.dart';
 import 'package:ecommerce_app/features/main_layout/favourite/data/data_source/favourite_remote_data_source.dart';
 
-import 'package:ecommerce_app/features/products_screen/data/model/ProductModel.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../products_screen/domain/entity/ProductEntity.dart';
@@ -21,7 +20,11 @@ class FavouriteRepositoryImp implements FavouriteRepository {
       var result = await dataSource.getFavourite();
       return result.fold(
         (response) {
-          return Left(response.productModel!.map((e) => e.toProductEntity(),).toList());
+          return Left(response.productModel!
+              .map(
+                (e) => e.toProductEntity(),
+              )
+              .toList());
         },
         (error) {
           return Right(error);
