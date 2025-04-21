@@ -1,6 +1,4 @@
-
 import 'package:ecommerce_app/features/products_screen/data/model/ProductModel.dart';
-import 'package:ecommerce_app/features/products_screen/domain/entity/ProductEntity.dart';
 
 /// status : "success"
 /// count : 1
@@ -8,9 +6,10 @@ import 'package:ecommerce_app/features/products_screen/domain/entity/ProductEnti
 
 class GetWishlistResponse {
   GetWishlistResponse({
-      this.status, 
-      this.count, 
-      this.productModel,});
+    this.status,
+    this.count,
+    this.productModel,
+  });
 
   GetWishlistResponse.fromJson(dynamic json) {
     status = json['status'];
@@ -35,5 +34,4 @@ class GetWishlistResponse {
     }
     return map;
   }
-
 }

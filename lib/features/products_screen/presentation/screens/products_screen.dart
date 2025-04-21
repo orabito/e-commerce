@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/features/main_layout/home/domain/entity/categories_entity/category_entity.dart';
 import 'package:ecommerce_app/features/products_screen/presentation/widgets/custom_product_widget.dart';
+import 'package:ecommerce_app/features/main_layout/favourite/presentation/logic/favourite_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/widget/home_screen_app_bar.dart';
 import '../logic/product_cubit.dart';
 
+/// Screen that displays products from a specific category
+/// Also handles wishlist functionality by loading wishlist data on initialization
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({super.key, required this.categoryEntity});
 
@@ -20,37 +23,38 @@ class ProductsScreen extends StatefulWidget {
 class _ProductsScreenState extends State<ProductsScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    context.read<ProductCubit>()
-      ..getProductFromCategory(widget.categoryEntity.id ?? "");
+    // Load products from the selected category
+    context
+        .read<ProductCubit>()
+        .getProductFromCategory(widget.categoryEntity.id ?? "");
+    // Load wishlist data to show correct heart icons for all products
+    context.read<FavouriteCubit>().getFavourite();
   }
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
-//ProductCubit.get(context).getProductFromCategory(categoryEntity.id??"");
+    // Get screen dimensions for responsive layout
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: const HomeScreenAppBar(
         automaticallyImplyLeading: true,
       ),
+      // Listen to ProductCubit for product loading states
       body: BlocBuilder<ProductCubit, ProductState>(
+        // Only rebuild when product-related states change
         buildWhen: (previous, current) {
           if (current is ProductSuccessState ||
-              current is ProductLoadingState || current is ProductErrorState) {
+              current is ProductLoadingState ||
+              current is ProductErrorState) {
             return true;
           }
           return false;
         },
         builder: (context, state) {
+          // Show products in a grid when loaded successfully
           if (state is ProductSuccessState) {
             var products = state.entity.data;
             return Padding(
@@ -60,7 +64,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                   Expanded(
                     child: GridView.builder(
                       itemCount: products?.length ?? 0,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 8,
                         mainAxisSpacing: 8,
@@ -80,10 +85,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
               ),
             );
           }
+          // Show error message if product loading fails
           if (state is ProductErrorState) {
-            return Center(child: Text(state.error),);
+            return Center(child: Text(state.error));
           }
-          return const Center(child: CircularProgressIndicator(),);
+          // Show loading indicator while products are being loaded
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );

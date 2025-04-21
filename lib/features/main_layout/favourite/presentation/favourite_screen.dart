@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/core/resources/constants_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/features/main_layout/favourite/presentation/widgets/favourite_item.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +25,8 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<FavouriteCubit, FavouriteState>(
       builder: (context, state) {
-        if(state is FavouriteSuccessState){
-          var products=state.productList;
+        if (state is FavouriteSuccessState) {
+          var products = state.productList;
           return Padding(
               padding: REdgeInsets.symmetric(
                   horizontal: AppSize.s14, vertical: AppSize.s10),
@@ -36,16 +35,19 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: AppSize.s12.h),
-                    child:
-                    FavoriteItem(product:products[index]),
+                    child: FavoriteItem(product: products[index]),
                   );
                 },
               ));
         }
-        if(state is FavouriteError){
-          return Center(child: Text(state.error),);
+        if (state is FavouriteError) {
+          return Center(
+            child: Text(state.error),
+          );
         }
-return const Center(child: CircularProgressIndicator(),);
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }
