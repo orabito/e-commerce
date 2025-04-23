@@ -13,6 +13,8 @@ final class ProductErrorState extends ProductState {
   ProductErrorState(this.error);
 }
 final class ProductLoadingState extends ProductState {}
+
+
 final class AddToWishlistLoadingState extends ProductState {
   String productId;
   AddToWishlistLoadingState(this.productId);
@@ -28,5 +30,23 @@ String error;
 String productId;
 AddToWishlistErrorState(this.error,this .productId);
 }
+
+
+final class AddToCartErrorState extends ProductState {
+  String productId;
+String error;
+AddToCartErrorState(this.error,this.productId);
+}
+final class AddToCartSuccessState extends ProductState {
+  String productId;
+  AddCartEntity addCartEntity;
+AddToCartSuccessState(this.productId,this.addCartEntity);
+}
+final class AddToCartLoadingState extends ProductState {
+  String productId;
+  AddToCartLoadingState(this.productId);
+
+}
+
 
 
