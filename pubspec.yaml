@@ -29,6 +29,7 @@ dependencies:
   flutter_dotenv: ^5.2.1
   cached_network: ^2.1.0
   intl: ^0.20.2
+  fluttertoast: ^8.2.12
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
@@ -6,9 +5,10 @@ import 'package:ecommerce_app/core/routes_manager/routes.dart';
 import 'package:ecommerce_app/core/widget/heart_button.dart';
 import 'package:ecommerce_app/features/products_screen/domain/entity/ProductEntity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import '../logic/product_cubit.dart';
 
 class CustomProductWidget extends StatelessWidget {
@@ -16,13 +16,13 @@ class CustomProductWidget extends StatelessWidget {
   final double height;
 
   final ProductEntity productEntity;
+
 //edit
   const CustomProductWidget({
     super.key,
     required this.productEntity,
     required this.width,
     required this.height,
-
   });
 
   String truncateTitle(String title) {
@@ -46,7 +46,8 @@ class CustomProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, Routes.productDetails,arguments:productEntity ),
+      onTap: () => Navigator.pushNamed(context, Routes.productDetails,
+          arguments: productEntity),
       child: Container(
         width: width * 0.4,
         height: height * 0.3,
@@ -81,15 +82,10 @@ class CustomProductWidget extends StatelessWidget {
                         height: height * 0.15,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(14.r)),
-                          image: DecorationImage(image: imageProvider,fit: BoxFit.cover
-
-                          )
-
-                        ),
-
-
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(14.r)),
+                            image: DecorationImage(
+                                image: imageProvider, fit: BoxFit.cover)),
                       );
                     },
                   ),
@@ -109,11 +105,13 @@ class CustomProductWidget extends StatelessWidget {
                   Positioned(
                       top: height * 0.01,
                       right: width * 0.02,
-                      child: HeartButton(onTap: () {
-
-                        ProductCubit.get(context).addToWishlist(productEntity.id!);
-
-                      }, productId:productEntity.id! ,)),
+                      child: HeartButton(
+                        onTap: () {
+                          ProductCubit.get(context)
+                              .addToWishlist(productEntity.id!);
+                        },
+                        productId: productEntity.id!,
+                      )),
                 ],
               ),
             ),
@@ -126,7 +124,7 @@ class CustomProductWidget extends StatelessWidget {
                   children: [
                     Text(
                       maxLines: 2,
-                      truncateTitle(productEntity.title??""),
+                      truncateTitle(productEntity.title ?? ""),
                       style: getMediumStyle(
                         color: ColorManager.textColor,
                         fontSize: 14.sp,
@@ -136,7 +134,7 @@ class CustomProductWidget extends StatelessWidget {
                     Text(
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      truncateDescription(productEntity.description??""),
+                      truncateDescription(productEntity.description ?? ""),
                       style: getRegularStyle(
                         color: ColorManager.textColor,
                         fontSize: 14.sp,
@@ -148,8 +146,10 @@ class CustomProductWidget extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(NumberFormat.simpleCurrency(name: "EGP", ).format(productEntity.price)
-                          ,
+                          Text(
+                            NumberFormat.simpleCurrency(
+                              name: "EGP",
+                            ).format(productEntity.price),
                             style: getRegularStyle(
                               color: ColorManager.textColor,
                               fontSize: 14.sp,
@@ -174,7 +174,6 @@ class CustomProductWidget extends StatelessWidget {
                             children: [
                               Flexible(
                                 child: Text(
-
                                   "Review (${productEntity.ratingsAverage})",
                                   style: getRegularStyle(
                                     color: ColorManager.textColor,
@@ -191,23 +190,95 @@ class CustomProductWidget extends StatelessWidget {
                         ),
                         const Spacer(),
                         Expanded(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: InkWell(
-                              onTap: () {},
-                              child: Container(
-                                height: height * 0.036,
-                                width: width * 0.08,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: ColorManager.primary,
+                          child: BlocConsumer<ProductCubit, ProductState>(
+                            listenWhen: (previous, current) {
+                              if (current is AddToCartSuccessState ||
+                                  current is AddToCartErrorState ||
+                                  current is AddToCartLoadingState) {
+                                return true;
+                              }
+                              return false;
+                            },
+                            buildWhen: (previous, current) {
+                              if (current is AddToCartSuccessState ||
+                                  current is AddToCartErrorState ||
+                                  current is AddToCartLoadingState) {
+                                return true;
+                              }
+                              return false;
+                            },
+                            listener: (context, state) {
+                              if (state is AddToCartSuccessState &&
+                                  state.productId == productEntity.id) {
+                                // ScaffoldMessenger.of(context)
+                                //     .showSnackBar(SnackBar(
+                                //         behavior: SnackBarBehavior.floating,
+                                //         content: Container(
+                                //           alignment: Alignment.center,
+                                //           child: Text(
+                                //               state.addCartEntity.message ??
+                                //                   ""),
+                                //         )));
+
+                                //package =>
+                                Fluttertoast.showToast(
+                                  msg:   state.addCartEntity.message ??"",
+                                  toastLength: Toast.LENGTH_LONG,
+                                  gravity: ToastGravity.TOP,
+                                  backgroundColor: Colors.black87,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0.sp,
+                                );
+                              }
+                              if (state is AddToCartErrorState&&state.productId==productEntity.id) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      alignment: Alignment.bottomCenter,
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [Text(state.error)],
+                                      ),
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                            builder: (context, state) {
+                              return ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: InkWell(
+                                  onTap: () {
+                                    ProductCubit.get(context)
+                                        .addToCart(productEntity.id!);
+                                  },
+                                  child: Container(
+                                    height: height * 0.036,
+                                    width: width * 0.08,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: ColorManager.primary,
+                                    ),
+                                    child: state is AddToCartLoadingState &&
+                                            state.productId == productEntity.id
+                                        ? Center(
+                                            child: SizedBox(
+                                                height: 15.h,
+                                                width: 15.w,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                )),
+                                          )
+                                        : const Icon(
+                                            Icons.add,
+                                            color: Colors.white,
+                                          ),
+                                  ),
                                 ),
-                                child: const Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
+                              );
+                            },
                           ),
                         ),
                       ],
