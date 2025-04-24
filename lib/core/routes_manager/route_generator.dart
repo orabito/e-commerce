@@ -1,6 +1,5 @@
 import 'package:ecommerce_app/core/routes_manager/routes.dart';
 import 'package:ecommerce_app/features/auth/sign_up/presentation/pages/sign_up_screen.dart';
-import 'package:ecommerce_app/features/cart/screens/cart_screen.dart';
 import 'package:ecommerce_app/features/main_layout/main_layout.dart';
 import 'package:ecommerce_app/features/product_details/presentation/screen/product_details.dart';
 import 'package:ecommerce_app/features/products_screen/domain/entity/ProductEntity.dart';
@@ -8,6 +7,7 @@ import 'package:ecommerce_app/features/products_screen/presentation/screens/prod
 import 'package:flutter/material.dart';
 
 import '../../features/auth/sign_in/presentation/pages/sign_in_screen.dart';
+import '../../features/cart/presentation/screens/cart_screen.dart';
 import '../../features/main_layout/home/domain/entity/categories_entity/category_entity.dart';
 
 class RouteGenerator {
