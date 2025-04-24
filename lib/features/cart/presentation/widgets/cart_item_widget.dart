@@ -4,9 +4,10 @@ import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/core/routes_manager/routes.dart';
 import 'package:ecommerce_app/core/widget/product_counter.dart';
-import 'package:ecommerce_app/features/cart/widgets/color_and_size_cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'color_and_size_cart_item.dart';
 
 class CartItemWidget extends StatelessWidget {
   const CartItemWidget({
