@@ -25,7 +25,7 @@ class CartItemModel {
     }
     price = json['price'];
   }
-
+//  i use her productmodel but maybe become string or productmodel
   num? count;
   String? id;
   ProductModel? product;
