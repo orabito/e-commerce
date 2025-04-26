@@ -94,6 +94,7 @@ class ProductModel {
     map['images'] = images;
     if (subcategory != null) {
       map['subcategory'] = subcategory?.map((v) => v.toJson()).toList();
+      //ex:we check here before we get subcategory
     }
     map['ratingsQuantity'] = ratingsQuantity;
     map['_id'] = id;
