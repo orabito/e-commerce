@@ -1,3 +1,7 @@
-abstract class CartRemoteDataSource {}
+import 'package:dartz/dartz.dart';
+import 'package:ecommerce_app/features/products_screen/data/model/add_cart/CartModel.dart';
 
-class CartRemoteDataSourceImp implements CartRemoteDataSource  {}
+abstract class CartRemoteDataSource {
+  Future<Either<CartModel,String>> getCart();
+}
+
