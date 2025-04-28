@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:ecommerce_app/core/internet_checker.dart';
 import 'package:ecommerce_app/features/cart/data/data_source/cart_remote_data_source.dart';
+import 'package:ecommerce_app/features/cart/data/model/remove_cart/Remove_cart.dart';
 
 import 'package:injectable/injectable.dart';
 
@@ -22,5 +23,16 @@ class CartRepositoryImp implements CartRepository {
 
 
     } return Right('No Internet');
+  }
+
+  @override
+  Future<Either<RemoveCart, String>> removeCart(String id) async {
+    if (await InternetChecker.checkNetwork()) {
+    var result = await cartDataSource.removeCart( id);
+    return result;
+
+
+    } return Right('No Internet');
+
   }
 }

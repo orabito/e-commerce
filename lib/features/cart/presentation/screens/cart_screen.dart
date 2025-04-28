@@ -57,7 +57,21 @@ class CartScreen extends StatelessWidget {
                       // the list of cart items ===============
                       child: ListView.separated(
                         itemBuilder: (context, index) => CartItemWidget(
-                          onDeleteTap: () {},
+                          onDeleteTap: () {
+                                GetCartCubit.get(context).removeCart(products[index].id??"");
+
+                            // BlocBuilder<GetCartCubit, GetCartState>(
+                            //
+                            //   builder:(context, state) {
+                            //     GetCartCubit.get(context).removeCart(products[index].id??"");
+                            //
+                            //   } ,
+                            // )
+
+
+
+
+                          },
                           onDecrementTap: (value) {},
                           onIncrementTap: (value) {},
                           cartModel: products[index],

@@ -5,10 +5,10 @@ import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/core/routes_manager/routes.dart';
 import 'package:ecommerce_app/core/widget/product_counter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../products_screen/data/model/add_cart/CartItemModel.dart';
-import 'color_and_size_cart_item.dart';
 
 class CartItemWidget extends StatelessWidget {
   const CartItemWidget({
@@ -80,14 +80,17 @@ class CartItemWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                      InkWell(
+                      BlocProvider(
+  create: (context) => SubjectBloc(),
+  child: InkWell(
                         onTap: onDeleteTap,
                         child: Image.asset(
                           IconsAssets.icDelete,
                           color: ColorManager.textColor,
                           height: 22.h,
                         ),
-                      )
+                      ),
+)
                     ],
                   ),
 
