@@ -5,32 +5,23 @@ import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/core/routes_manager/routes.dart';
 import 'package:ecommerce_app/core/widget/product_counter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'color_and_size_cart_item.dart';
+import '../../../products_screen/data/model/add_cart/CartItemModel.dart';
 
 class CartItemWidget extends StatelessWidget {
   const CartItemWidget({
     super.key,
-    required this.imagePath,
-    required this.title,
-    required this.color,
-    required this.colorName,
-    required this.size,
-    required this.price,
+
     required this.onDeleteTap,
-    required this.quantity,
+    required this.cartModel,
     required this.onIncrementTap,
     required this.onDecrementTap,
   });
-  final String imagePath;
-  final String title;
-  final Color color;
-  final String colorName;
-  final int size;
-  final int price;
+
   final void Function() onDeleteTap;
-  final int quantity;
+  final CartItemModel cartModel;
   final void Function(int value) onIncrementTap;
   final void Function(int value) onDecrementTap;
   @override
@@ -55,8 +46,8 @@ class CartItemWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(15.r),
               border: Border.all(color: ColorManager.primary.withOpacity(0.3)),
             ),
-            child: Image.asset(
-              imagePath,
+            child: Image.network(
+              cartModel.product?.imageCover??"",
               fit: BoxFit.cover,
               height: isPortrait ? height * 0.142 : height * 0.23,
               width: isPortrait ? width * 0.29 : 165.w,
@@ -80,7 +71,7 @@ class CartItemWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          title,
+                          cartModel.product?.title??"",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: getBoldStyle(
@@ -89,32 +80,35 @@ class CartItemWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                      InkWell(
+                      BlocProvider(
+  create: (context) => SubjectBloc(),
+  child: InkWell(
                         onTap: onDeleteTap,
                         child: Image.asset(
                           IconsAssets.icDelete,
                           color: ColorManager.textColor,
                           height: 22.h,
                         ),
-                      )
+                      ),
+)
                     ],
                   ),
 
                   // SizedBox(height: 7.h),
                   const Spacer(),
                   // display color and size===================
-                  ColorAndSizeCartItem(
-                    color: color,
-                    colorName: colorName,
-                    size: size,
-                  ),
-                  const Spacer(),
+                  // ColorAndSizeCartItem(
+                  //   color: Colors.black,
+                  //   colorName: "Black",
+                  //   size: 40,
+                  // ),
+                  // const Spacer(),
                   // display price and quantity =================
                   Row(
                     children: [
                       Expanded(
                         child: Text(
-                          'EGP $price',
+                          'EGP ${ cartModel.price!*cartModel.count!}',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: getBoldStyle(
@@ -124,7 +118,7 @@ class CartItemWidget extends StatelessWidget {
                       ),
                       ProductCounter(
                         add: onIncrementTap,
-                        productCounter: quantity,
+                        productCounter:  cartModel.count?.toInt()??0,
                         remove: onDecrementTap,
                       )
                     ],
