@@ -30,12 +30,13 @@ class GetCartCubit extends Cubit<GetCartState> {
   }
 
   removeCart(String id) async {
-    emit(RemoveCartLoading());
+    emit(RemoveCartLoading(id));
     var response = await removeUseCase.call(id);
     response.fold((cart) {
-      emit(RemoveCartSuccess(cart));
+      emit(RemoveCartSuccess(cart ,id));
+      getUserCart();
     }, (error) {
-      emit(RemoveCartError(error));
+      emit(RemoveCartError(error,id));
     },);
   }
 }

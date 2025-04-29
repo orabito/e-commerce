@@ -4,9 +4,12 @@ import 'package:ecommerce_app/core/resources/color_manager.dart';
 import 'package:ecommerce_app/core/resources/styles_manager.dart';
 import 'package:ecommerce_app/core/resources/values_manager.dart';
 import 'package:ecommerce_app/features/cart/presentation/logic/get_cart_cubit.dart';
+import 'package:ecommerce_app/features/products_screen/data/model/ProductModel.dart';
+import 'package:ecommerce_app/features/products_screen/presentation/logic/product_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../widgets/cart_item_widget.dart';
 import '../widgets/total_price_and_checkout_botton.dart';
@@ -48,6 +51,7 @@ class CartScreen extends StatelessWidget {
         body: BlocBuilder<GetCartCubit, GetCartState>(
           builder: (context, state) {
             if (state is GetCartSuccess) {
+
               final products = state.cart.data?.products ?? [];
               return Padding(
                 padding: REdgeInsets.all(AppPadding.p14),
@@ -74,7 +78,7 @@ class CartScreen extends StatelessWidget {
                           },
                           onDecrementTap: (value) {},
                           onIncrementTap: (value) {},
-                          cartModel: products[index],
+                         cartModel: products[index], productEntity: products[index].product!.toProductEntity(),
                         ),
                         separatorBuilder: (context, index) =>
                             SizedBox(height: AppSize.s12.h),
@@ -96,7 +100,7 @@ class CartScreen extends StatelessWidget {
                 child: Text(state.error),
               );
             }
-            return  Center(
+            return Center(
               child: CircularProgressIndicator(),
             );
           },

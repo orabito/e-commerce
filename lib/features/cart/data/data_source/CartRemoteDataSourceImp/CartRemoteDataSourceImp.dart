@@ -27,15 +27,15 @@ class CartRemoteDataSourceImp implements CartRemoteDataSource {
   }
 
   @override
-  Future<Either<RemoveCart, String>> removeCart(String id ) async {
+  Future<Either<RemoveCart, String>> removeCart(String id) async {
     try {
-      var response = await apiManger.getRequest(
-          path: "${EndPoints.addCart}/$id", headers: {"token": PrefsHelper.getToken()});
+      var response = await apiManger.deleteRequest(
+          path: "${EndPoints.addCart}/$id",
+          headers: {"token": PrefsHelper.getToken()});
 
       return left(RemoveCart.fromJson(response.data));
     } on Exception catch (e) {
       return Right(e.toString());
     }
   }
-  }
-
+}

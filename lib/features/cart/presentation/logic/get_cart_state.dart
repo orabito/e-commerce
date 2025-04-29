@@ -18,15 +18,19 @@ final class GetCartError extends GetCartState {
 }
 
 final class RemoveCartSuccess extends GetCartState {
-  RemoveCartSuccess(this.cart);
+  RemoveCartSuccess(this.cart,this.id);
   final RemoveCart cart;
+  final String id;
 }
 
 final class RemoveCartLoading extends GetCartState {
-
+  final String id;
+  RemoveCartLoading(this.id);
 }
 final class RemoveCartError extends GetCartState {
   final String error;
-  RemoveCartError(this.error);
+  final  String id;
+
+  RemoveCartError(this.error,this.id);
 }
 

@@ -13,23 +13,33 @@ import '../../features/main_layout/home/domain/entity/categories_entity/category
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
-
       case Routes.cartRoute:
         return MaterialPageRoute(builder: (_) => const CartScreen());
       case Routes.mainRoute:
         return MaterialPageRoute(builder: (_) => const MainLayout());
 
-      case Routes.productsScreenRoute:{
-        CategoryEntity? categoryEntity=     settings.arguments as CategoryEntity;
-        return MaterialPageRoute(builder: (_) =>  ProductsScreen(categoryEntity: categoryEntity,));
-
-      }
+      case Routes.productsScreenRoute:
+        {
+          CategoryEntity? categoryEntity = settings.arguments as CategoryEntity;
+          return MaterialPageRoute(
+              builder: (_) => ProductsScreen(
+                    categoryEntity: categoryEntity,
+                  ));
+        }
 
       case Routes.productDetails:
         {
-    ProductEntity? product=     settings.arguments as ProductEntity;
-    return MaterialPageRoute(builder: (_) =>   ProductDetails(product: product ));
-    }
+          if (settings.arguments == null) {
+            return unDefinedRoute();
+          }
+          try {
+            ProductEntity product = settings.arguments as ProductEntity;
+            return MaterialPageRoute(
+                builder: (_) => ProductDetails(product: product));
+          } catch (e) {
+            return unDefinedRoute();
+          }
+        }
 
       case Routes.signInRoute:
         return MaterialPageRoute(builder: (_) => const SignInScreen());
